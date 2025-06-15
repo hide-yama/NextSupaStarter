@@ -29,8 +29,12 @@ CLAUDE.mdを読んで、このテンプレートの状況と使い方を理解�
    - GitHub: 新しいリポジトリ名
    - Supabase: プロジェクトURL、ANON_KEY、SERVICE_ROLE_KEY
    - Vercel: プロジェクト名（任意）
-4. **AIが環境変数の設定と接続確認**
-5. **アプリ固有の機能開発開始**
+4. **環境変数設定とMCPサーバー接続**
+   - `.env.local`に環境変数設定
+   - `scripts/setup-mcp.sh`実行でClaude Code MCP設定
+   - Claude Codeを再起動してSupabaseツール利用可能に
+5. **AIが接続確認**
+6. **アプリ固有の機能開発開始**
 
 ### 💡 利用者が準備するもの
 - 作成したいアプリのアイデア・要件
@@ -90,7 +94,9 @@ CLAUDE.mdを読んで、このテンプレートの状況と使い方を理解�
 * `README.md`: セットアップガイド
 * `docs/template-design.md`: 設計思想
 * `docs/setup-guide.md`: 外部サービス連携手順
+* `docs/mcp-setup.md`: Claude Code MCP設定手順
 * `.env.example`: 必須環境変数一覧（Supabase接続情報）
+* `scripts/setup-mcp.sh`: MCP自動設定スクリプト
 * `supabase/`: マイグレーションや設定
 * `tests/`: E2E テストファイル群
 * `claude.md`: AI連携用の進行管理ファイル（このファイル）
