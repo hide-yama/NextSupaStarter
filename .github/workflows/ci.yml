@@ -1,0 +1,207 @@
+# =============================================================================
+# NextSupaStarter - CI/CD パイプライン
+# =============================================================================
+# プルリクエストとpushで実行される品質チェック
+# テンプレートとしてのコード品質を保証
+# =============================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # =============================================================================
+  # コード品質チェック
+  # =============================================================================
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run ESLint
+      run: npm run lint
+    
+    - name: Run TypeScript type check
+      run: npm run type-check
+    
+    - name: Build application
+      run: npm run build
+      env:
+        # テンプレート用のダミー環境変数
+        NEXT_PUBLIC_SUPABASE_URL: https://dummy-project.supabase.co
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy-anon-key
+    
+    - name: Run tests (placeholder)
+      run: npm run test
+
+  # =============================================================================
+  # セキュリティチェック
+  # =============================================================================
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run security audit
+      run: npm audit --audit-level=moderate
+    
+    - name: Check for secrets
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+
+  # =============================================================================
+  # 依存関係チェック
+  # =============================================================================
+  dependencies:
+    name: Dependency Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Check for outdated packages
+      run: npm outdated || true
+    
+    - name: Check package-lock.json
+      run: npm ci --dry-run
+
+  # =============================================================================
+  # テンプレート検証
+  # =============================================================================
+  template-validation:
+    name: Template Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Validate .env.example
+      run: |
+        if [ ! -f .env.example ]; then
+          echo "❌ .env.example ファイルが見つかりません"
+          exit 1
+        fi
+        echo "✅ .env.example ファイルが存在します"
+    
+    - name: Validate documentation
+      run: |
+        required_docs=("README.md" "docs/setup-guide.md" "docs/template-design.md" "CLAUDE.md")
+        for doc in "${required_docs[@]}"; do
+          if [ ! -f "$doc" ]; then
+            echo "❌ 必須ドキュメント $doc が見つかりません"
+            exit 1
+          fi
+        done
+        echo "✅ すべての必須ドキュメントが存在します"
+    
+    - name: Validate project structure
+      run: |
+        required_dirs=("src/app" "src/lib" "docs" "supabase")
+        for dir in "${required_dirs[@]}"; do
+          if [ ! -d "$dir" ]; then
+            echo "❌ 必須ディレクトリ $dir が見つかりません"
+            exit 1
+          fi
+        done
+        echo "✅ プロジェクト構造が正しく設定されています"
+
+  # =============================================================================
+  # ヘルスチェック
+  # =============================================================================
+  health-check:
+    name: Health Check API
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+      env:
+        NEXT_PUBLIC_SUPABASE_URL: https://dummy-project.supabase.co
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy-anon-key
+    
+    - name: Start application
+      run: |
+        npm start &
+        APP_PID=$!
+        echo "APP_PID=$APP_PID" >> $GITHUB_ENV
+      env:
+        NEXT_PUBLIC_SUPABASE_URL: https://dummy-project.supabase.co
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy-anon-key
+    
+    - name: Wait for application startup
+      run: |
+        timeout 60 sh -c 'until curl -f http://localhost:3000/api/health; do sleep 2; done'
+    
+    - name: Test health check endpoint
+      run: |
+        response=$(curl -s http://localhost:3000/api/health)
+        echo "Health check response: $response"
+        
+        # ステータスが not_configured であることを確認（ダミー環境変数のため）
+        echo "$response" | grep -q '"status":"not_configured"' || {
+          echo "❌ Health check returned unexpected status"
+          exit 1
+        }
+        echo "✅ Health check endpoint working correctly"
+    
+    - name: Stop application
+      run: kill $APP_PID || true
+
+# =============================================================================
+# 成功時のメッセージ
+# =============================================================================
