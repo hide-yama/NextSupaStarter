@@ -26,7 +26,19 @@
 | **TypeScript** | 5.x | 型安全性 |
 | **Supabase** | Latest | 認証・DB・ストレージ |
 | **Tailwind CSS** | 3.4.x | スタイリング |
+| **pnpm** | 10.x | パッケージ管理 |
 | **Docker** | - | ローカル環境構築 |
+
+## 📋 前提条件
+
+以下のツールが必要です：
+
+- **Node.js** 18.x以上
+- **pnpm** 8.x以上 (`npm install -g pnpm`)
+- **Docker** と **Docker Compose**
+- **Git**
+
+⚠️ **重要**: このプロジェクトは **pnpm** を使用します。npm や yarn は使用しないでください。
 
 ## 🚀 クイックスタート
 

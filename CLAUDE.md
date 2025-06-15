@@ -88,9 +88,18 @@ Next.js × Supabase × Docker を使ったモダンなWebアプリケーショ�
 
 ## 🧠 ヒント（AI向けメタ情報）
 
-* `pnpm` を使用しているため `npm` コマンドではなく `pnpm` を前提とする
+### 🔧 必須環境要件
+* **pnpm** - このプロジェクトは `pnpm` を使用。npmは使用しない
+  - インストール: `npm install -g pnpm`
+  - 使用例: `pnpm install`, `pnpm dev`
+  - AIは必ず `pnpm` コマンドを使用すること
+* **Node.js** 18.x以上
+* **Docker** - Supabaseローカル環境用
+
+### 📋 開発ルール
 * `.env.local` は `.env.example` をコピーして作成される
 * 開発ブランチは `develop`、本番ブランチは `main`
+* すべてのパッケージ管理は `pnpm` で行う（npm/yarn禁止）
 
 ---
 
