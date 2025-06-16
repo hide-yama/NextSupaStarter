@@ -1,28 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm create:*)",
-      "Bash(npx create-next-app:*)",
-      "Bash(mkdir:*)",
-      "Bash(cp:*)",
-      "Bash(true)",
-      "Bash(rm:*)",
-      "Bash(ls:*)",
-      "Bash(mv:*)",
-      "Bash(find:*)",
-      "Bash(npm install:*)",
-      "Bash(npm run dev:*)",
-      "Bash(npm run type-check:*)",
-      "Bash(npm run lint)",
-      "Bash(git init:*)",
-      "Bash(git add:*)",
-      "Bash(git remote add:*)",
-      "Bash(git branch:*)",
-      "Bash(git push:*)",
-      "Bash(cat:*)",
-      "Bash(git cherry-pick:*)",
-      "Bash(git merge:*)"
-    ],
-    "deny": []
+      "Bash(bash:*)",
+      "Bash(pnpm supabase:*)"
+    ]
   }
 }

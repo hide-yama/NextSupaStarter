@@ -29,13 +29,17 @@ CLAUDE.mdを読んで、このテンプレートの状況と使い方を理解�
    - GitHub: 新しいリポジトリ名
    - Supabase: プロジェクトURL、ANON_KEY、SERVICE_ROLE_KEY
    - Vercel: プロジェクト名（任意）
-4. **環境変数設定とMCPサーバー接続**
-   - `.env.local`に環境変数設定
-   - `scripts/setup-mcp.sh`実行でClaude Code MCP設定
-   - Claude Codeを再起動してSupabaseツール利用可能に
-5. **AIが接続確認**
-6. **アプリ固有の機能開発開始**
-7. **テンプレート→アプリ変換**（ユーザーの希望時）
+4. **環境変数設定とローカル環境の選択**
+   - **開発環境の選択を明確に**：
+     - Dockerローカル環境（推奨）: `pnpm supabase status`で確認
+     - 本番Supabase Cloud: Vercelデプロイ時のみ使用
+   - `.env.local`に環境変数設定（両方の設定を記載し、使用する方を有効化）
+5. **Playwright E2E テスト設定（任意）**
+   - `scripts/setup-mcp.sh`実行でPlaywright MCP設定
+   - Claude Codeを再起動してE2Eテスト自動化が利用可能に
+6. **AIが接続確認**
+7. **アプリ固有の機能開発開始**
+8. **テンプレート→アプリ変換**（ユーザーの希望時）
    - テンプレート専用ファイル・記述の削除
    - アプリ用ドキュメントへの書き換え
 
@@ -130,14 +134,45 @@ docs/mcp-setup.md         # MCP設定手順（開発完了後は不要）
 
 ---
 
+## 🔗 Playwright E2E テスト（任意）
+
+### 🛠️ Playwright MCP設定手順
+
+#### 自動設定（推奨）
+```bash
+# Playwright MCP設定スクリプト実行
+bash scripts/setup-mcp.sh
+```
+
+#### 手動設定
+```bash
+# テンプレートファイルをコピー
+cp .claude/settings.template.json .claude/settings.json
+```
+
+### ⚙️ MCP設定ファイル構成
+```
+.claude/
+├── settings.json              # MCP接続設定（Git除外）
+├── settings.template.json     # テンプレート
+└── settings.local.json        # 権限設定
+```
+
+### 🎯 E2Eテストの利点
+- **Claude Code連携**: ブラウザ操作を自動化
+- **リアルタイム確認**: 実際のユーザー操作をテスト
+- **回帰テスト**: 機能追加時の既存機能チェック
+
+---
+
 ## 📂 管理ファイル（AIが見るべき関連ファイル）
 
 * `README.md`: セットアップガイド
 * `docs/template-design.md`: 設計思想
 * `docs/setup-guide.md`: 外部サービス連携手順
-* `docs/mcp-setup.md`: Claude Code MCP設定手順
 * `.env.example`: 必須環境変数一覧（Supabase接続情報）
-* `scripts/setup-mcp.sh`: MCP自動設定スクリプト
+* `scripts/setup-mcp.sh`: Playwright MCP設定スクリプト
+* `.claude/settings.template.json`: MCP設定テンプレート
 * `supabase/`: マイグレーションや設定
 * `tests/`: E2E テストファイル群
 * `claude.md`: AI連携用の進行管理ファイル（このファイル）
@@ -172,6 +207,45 @@ docs/mcp-setup.md         # MCP設定手順（開発完了後は不要）
 * `.env.local` は `.env.example` をコピーして作成される
 * 開発ブランチは `develop`、本番ブランチは `main`
 * すべてのパッケージ管理は `pnpm` で行う（npm/yarn禁止）
+* **Supabase環境の管理**：
+  - ローカル開発: Docker環境を使用（`http://127.0.0.1:54321`）
+  - 本番デプロイ: Vercel環境変数でSupabase Cloudを使用
+  - `.env.local`は常にローカル環境用（シンプル管理）
+
+### 🚨 環境構築時のトラブル回避チェックリスト
+
+**必須事前確認（AIが最初に実行すべき）**
+```bash
+# 1. Docker状態確認
+docker info && docker ps
+
+# 2. ポート使用状況確認
+lsof -i :3000 && lsof -i :54321-54324
+
+# 3. Supabase環境確認
+pnpm supabase status
+```
+
+**開発サーバー起動時の注意点**
+- **初回起動時間**: 55-90秒の待機時間が必要（依存関係解決のため）
+- **バックグラウンド起動**: `pnpm dev > dev.log 2>&1 &` でログ分離
+- **ヘルスチェック**: `curl -f http://localhost:3000` で接続確認
+- **プロセス管理**: `pkill -f "next dev"` で確実な停止
+
+**段階的起動手順**
+```bash
+# 1. Docker起動確認
+open -a Docker && sleep 10
+
+# 2. Supabase環境起動
+pnpm supabase start
+
+# 3. 開発サーバー起動（バックグラウンド）
+pnpm dev > dev.log 2>&1 &
+
+# 4. 起動待機とヘルスチェック
+sleep 60 && curl -f http://localhost:3000
+```
 
 ---
 
