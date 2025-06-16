@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
@@ -18,10 +18,10 @@ function createSupabaseClient() {
       `)
     }
     // ビルド時にはダミーのクライアントを返す
-    return createClient('https://placeholder.supabase.co', 'placeholder-key')
+    return createBrowserClient('https://placeholder.supabase.co', 'placeholder-key')
   }
   
-  return createClient(supabaseUrl, supabaseAnonKey)
+  return createBrowserClient(supabaseUrl, supabaseAnonKey)
 }
 
 export const supabase = createSupabaseClient()

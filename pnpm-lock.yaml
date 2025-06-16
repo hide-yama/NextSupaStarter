@@ -27,6 +27,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
+      '@playwright/test':
+        specifier: ^1.53.0
+        version: 1.53.0
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.10
@@ -2137,7 +2140,6 @@ snapshots:
   '@playwright/test@1.53.0':
     dependencies:
       playwright: 1.53.0
-    optional: true
 
   '@rtsao/scc@1.1.0': {}
 
@@ -3514,15 +3516,13 @@ snapshots:
 
   picomatch@4.0.2: {}
 
-  playwright-core@1.53.0:
-    optional: true
+  playwright-core@1.53.0: {}
 
   playwright@1.53.0:
     dependencies:
       playwright-core: 1.53.0
     optionalDependencies:
       fsevents: 2.3.2
-    optional: true
 
   possible-typed-array-names@1.1.0: {}
 

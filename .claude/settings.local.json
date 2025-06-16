@@ -4,7 +4,16 @@
       "Bash(bash:*)",
       "Bash(pnpm supabase:*)",
       "Bash(grep:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ls:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(pkill:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)"
     ]
   },
   "mcpServers": {
