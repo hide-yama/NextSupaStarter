@@ -3,7 +3,8 @@
     "allow": [
       "Bash(bash:*)",
       "Bash(pnpm supabase:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git commit:*)"
     ]
   },
   "mcpServers": {
