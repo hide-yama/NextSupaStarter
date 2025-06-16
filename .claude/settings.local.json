@@ -20,7 +20,8 @@
       "Bash(git branch:*)",
       "Bash(git push:*)",
       "Bash(cat:*)",
-      "Bash(git cherry-pick:*)"
+      "Bash(git cherry-pick:*)",
+      "Bash(git merge:*)"
     ],
     "deny": []
   }
