@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(bash:*)",
-      "Bash(pnpm supabase:*)"
+      "Bash(pnpm supabase:*)",
+      "Bash(git checkout:*)",
+      "Bash(rm:*)"
     ]
   }
 }
