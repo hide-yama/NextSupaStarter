@@ -40,6 +40,23 @@
 
 ⚠️ **重要**: このプロジェクトは **pnpm** を使用します。npm や yarn は使用しないでください。
 
+## 🔗 Claude Code連携 (MCP設定)
+
+このテンプレートは[Claude Code](https://claude.ai/code)との強力な連携機能を提供します。
+
+### MCP設定の実行
+
+```bash
+# Playwright MCP設定
+bash scripts/setup-mcp.sh
+```
+
+### 利用可能な機能
+- **Playwright MCP**: E2Eテスト、ブラウザ自動化
+- **Supabase操作**: Claude CodeがCLIコマンド経由で直接実行
+
+詳細は[CLAUDE.md](./CLAUDE.md)を参照してください。
+
 ## 🚀 クイックスタート
 
 ### 1. リポジトリのクローン
@@ -52,7 +69,7 @@ cd NextSupaStarter
 ### 2. 依存関係のインストール
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 3. 環境変数の設定
@@ -64,8 +81,11 @@ cp .env.example .env.local
 `.env.local`を編集してSupabaseの接続情報を設定：
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+# ローカル開発用（デフォルト設定）
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# 本番環境はVercel環境変数で設定
 ```
 
 > 📝 詳細な設定手順は [docs/setup-guide.md](docs/setup-guide.md) を参照
@@ -73,7 +93,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ### 4. 開発サーバーの起動
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 🎉 http://localhost:3000 でアプリケーションが起動します！
@@ -120,13 +140,13 @@ Supabaseローカル環境を使用する場合：
 
 ```bash
 # Supabase CLI のインストール（初回のみ）
-npm install -g @supabase/cli
+pnpm install -g @supabase/cli
 
 # ローカル環境の起動
-supabase start
+pnpm supabase start
 
 # 開発サーバーの起動
-npm run dev
+pnpm dev
 ```
 
 - **アプリ**: http://localhost:3000
@@ -137,13 +157,13 @@ npm run dev
 
 ```bash
 # 型チェック
-npm run type-check
+pnpm type-check
 
 # Lintチェック
-npm run lint
+pnpm lint
 
 # ビルドテスト
-npm run build
+pnpm build
 ```
 
 ## 📖 ドキュメント

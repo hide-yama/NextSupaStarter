@@ -14,19 +14,25 @@ export default function LoginPage() {
     setMessage('')
 
     try {
+      console.log('送信中のメールアドレス:', email)
+      console.log('リダイレクトURL:', `${window.location.origin}/auth/callback`)
+      
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
 
       if (error) {
+        console.error('認証エラー:', error)
         setMessage(`エラー: ${error.message}`)
       } else {
+        console.log('マジックリンク送信成功')
         setMessage('マジックリンクをメールに送信しました。メールをご確認ください。')
       }
-    } catch {
+    } catch (err) {
+      console.error('予期しないエラー:', err)
       setMessage('ログインに失敗しました。')
     } finally {
       setIsLoading(false)

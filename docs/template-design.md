@@ -25,14 +25,21 @@
 | **pnpm**                                   | latest | 高速パッケージ管理とディスク容量節約        |
 | **ESLint/Prettier**                        | latest | コード品質とフォーマットの統一            |
 | **Playwright**                             | latest | E2Eテストの安定性とブラウザ互換性        |
+| **Playwright MCP**                         | latest | AI連携E2Eテストの効率化           |
 | **GitHub Actions**                         | -      | CI/CDパイプラインの自動化              |
 
 ## 🗂 ディレクトリ構成と役割
 
 ```txt
 NextSupaStarter/
+├── .claude/           # Playwright MCP設定
+│   ├── settings.json           # 現在アクティブなMCP設定
+│   ├── settings.template.json  # 設定テンプレート
+│   └── settings.local.json     # 権限設定
 ├── .github/workflows/ # GitHub Actions CI/CD
 ├── docs/              # 設計書・開発ガイド
+├── scripts/           # 自動化スクリプト
+│   └── setup-mcp.sh   # Playwright MCP設定
 ├── src/               # Next.jsアプリケーション
 │   ├── app/           # App Routerページ・レイアウト
 │   ├── components/    # 再利用コンポーネント
@@ -40,9 +47,8 @@ NextSupaStarter/
 ├── supabase/          # Supabase CLI設定・マイグレーション
 ├── tests/             # E2Eテスト（Playwright）
 ├── .env.example       # 環境変数テンプレート
-├── docker-compose.yml # ローカル開発環境
 ├── package.json       # pnpm設定
-└── CLAUDE.md         # AI連携管理
+└── CLAUDE.md         # AI連携管理・MCP詳細設定
 ```
 
 ## 🎯 テンプレート完成の境界線（重要）
@@ -85,13 +91,31 @@ NextSupaStarter/
 * UIコンポーネントライブラリ（MUI/Chakra UI等）は非搭載
 * SEO/i18n対応は非対応（必要時に導入）
 * Supabase Cloudの高度な機能（Branching/Team）は対象外
-* MCP/AI連携機能はPhase 1では除外（Phase 4で任意追加）
+* 複雑なデプロイメント戦略（Blue-Green、Canary等）は対象外
 
 ## 🔚 最終成果物
 
-* テンプレート本体（README.md, 構成済みディレクトリ）
-* README に記されたステップに沿って、**GitHub／Supabase／Vercel の外部連携が完了する設計**
-* Cursor などのツールが README から適切な作業を推論できる構成
+* **テンプレート本体**: 構成済みディレクトリとドキュメント
+* **AI連携機能**: Playwright MCPによるE2Eテスト効率化
+* **外部サービス連携**: GitHub/Supabase/Vercelの完全対応設計
+* **シンプル環境管理**: ローカル開発とVercelデプロイの分離
+* **包括的ドキュメント**: README、CLAUDE.md、セットアップガイド
+
+## 🤖 AI連携機能の設計思想
+
+### Playwright MCP 連携
+- **E2Eテスト自動化**: ブラウザ操作の自動テスト
+- **リアルタイムテスト**: 実際のユーザー操作シミュレーション
+- **回帰テスト**: 機能追加時の既存機能確認
+
+### 開発効率の向上
+- **Supabase CLI連携**: AIが直接コマンド実行でデータベース操作
+- **シンプル環境管理**: .env.localのみで環境切り替え
+- **テスト支援**: Playwright MCPでE2Eテスト自動作成・実行
+
+### 学習効果
+- **段階的理解**: 手動設定とAI支援のバランス
+- **ベストプラクティス**: AIが最適解を提案・実装
 
 ---
 
