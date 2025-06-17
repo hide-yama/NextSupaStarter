@@ -4,7 +4,9 @@
       "Bash(bash:*)",
       "Bash(pnpm supabase:*)",
       "Bash(git checkout:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(rm:*)",
+      "Bash(kill:*)"
     ]
   }
 }

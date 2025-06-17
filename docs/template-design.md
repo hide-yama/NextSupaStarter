@@ -21,7 +21,7 @@
 | **Next.js (App Router)**                   | 15.x   | フロント・API を統合して扱える構成で保守性が高い |
 | **TypeScript**                             | 5.x    | 型安全と自己記述性の向上               |
 | **Tailwind CSS**                           | 3.4.x  | UI ライブラリに依存せずに柔軟なスタイリングが可能 |
-| **Supabase (Docker)**                      | latest | オフライン開発・テストの再現性確保          |
+| **Supabase Cloud**                         | latest | 統一されたクラウド開発環境              |
 | **pnpm**                                   | latest | 高速パッケージ管理とディスク容量節約        |
 | **ESLint/Prettier**                        | latest | コード品質とフォーマットの統一            |
 | **Playwright**                             | latest | E2Eテストの安定性とブラウザ互換性        |
@@ -81,7 +81,7 @@ NextSupaStarter/
 
 テンプレートの「完成定義」は以下の条件をすべて満たすこと：
 
-1. GitHub でテンプレートをクローンし、`pnpm install` → `docker compose up` → `pnpm dev` で正常起動できる
+1. GitHub でテンプレートをクローンし、`pnpm install` → `pnpm dev` で正常起動できる
 2. `.env.local` を `.env.example` からコピーし、明示された値を入力すればログイン〜CRUD 操作が可能
 3. `pnpm test` / `pnpm test:e2e` が通る（初期値では空でも OK）
 4. Vercel／Supabase をそれぞれの管理画面から手動で接続可能（テンプレート側に接続情報は含まない）

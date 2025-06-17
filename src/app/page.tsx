@@ -9,7 +9,7 @@ export default function Home() {
             🏗️ NextSupaStarter
           </h1>
           <p className="text-xl text-gray-600 mb-12">
-            Next.js × Supabase × Docker を使ったモダンな<br />
+            Next.js × Supabase を使ったモダンな<br />
             Webアプリケーション開発のスターターテンプレート
           </p>
 
@@ -17,8 +17,8 @@ export default function Home() {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold mb-3">⚡ 高速セットアップ</h3>
               <p className="text-gray-600">
-                Docker + Supabase CLI で<br />
-                ローカル環境を即座に構築
+                Supabase Cloud で<br />
+                開発環境を即座に構築
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">

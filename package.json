@@ -1,7 +1,7 @@
 {
   "name": "nextsupastartertemplate",
   "version": "0.1.0",
-  "description": "Next.js × Supabase × Docker を使ったモダンなWebアプリケーション開発のスターターテンプレート",
+  "description": "Next.js × Supabase を使ったモダンなWebアプリケーション開発のスターターテンプレート",
   "private": true,
   "engines": {
     "node": ">=18.0.0",
