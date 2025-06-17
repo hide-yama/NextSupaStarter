@@ -6,7 +6,8 @@
       "Bash(git checkout:*)",
       "Bash(rm:*)",
       "Bash(rm:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "Bash(cat:*)"
     ]
   }
 }
